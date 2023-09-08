@@ -16,8 +16,11 @@ import java.util.List;
 public class JobData {
 
     private static final String DATA_FILE = "src/main/resources/job_data.csv";
+//    below can be edited but if there were more than one JobData object,
+//    they would all share the same value for isDataLoaded
     private static boolean isDataLoaded = false;
 
+//    allJobs holds the array list of all the jobs, each one is a hashmap
     private static ArrayList<HashMap<String, String>> allJobs;
 
     /**
@@ -61,7 +64,7 @@ public class JobData {
      * with "Enterprise Holdings, Inc".
      *
      * @param column   Column that should be searched.
-     * @param value Value of teh field to search for
+     * @param value Value of the field to search for
      * @return List of all jobs matching the criteria
      */
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
@@ -75,7 +78,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -91,11 +94,27 @@ public class JobData {
      */
     public static ArrayList<HashMap<String, String>> findByValue(String value) {
 
-        // load data, if not already loaded
+        // load data, if not already loaded. allJobs is a global variable, just make sure it's loaded first.
         loadData();
 
-        // TODO - implement this method
-        return null;
+        ArrayList<HashMap<String, String>> jobsFound = new ArrayList<>();
+
+//        iterate through each Hashmap in the array list of all jobs
+        for (HashMap<String, String> jobToLookAt : allJobs) {
+
+            //Check each of this job's values individually.
+            for (String jobValue : jobToLookAt.values()) {
+
+                //compare lowercase version of current job value to lowercased value
+                if (jobValue.toLowerCase().contains(value.toLowerCase() )){
+                    jobsFound.add(jobToLookAt);
+                }
+                break; //if we find a match, no need to keep looking at this job, so we continue.
+            }
+
+        }
+
+        return jobsFound;
     }
 
     /**

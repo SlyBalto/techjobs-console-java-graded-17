@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -9,6 +8,8 @@ import java.util.Scanner;
 public class TechJobs {
 
     static Scanner in = new Scanner(System.in);
+
+//    [[This is our main. everything starts here. show visual example made in paint here]]
 
     public static void main (String[] args) {
 
@@ -28,6 +29,8 @@ public class TechJobs {
         System.out.println("Welcome to LaunchCode's TechJobs App!");
 
         // Allow the user to search until they manually quit
+
+        // [[Selecting things Loop]]
         while (true) {
 
             String actionChoice = getUserSelection("View jobs by (type 'x' to quit):", actionChoices);
@@ -39,6 +42,7 @@ public class TechJobs {
                 String columnChoice = getUserSelection("List", columnChoices);
 
                 if (columnChoice.equals("all")) {
+//                    prints jobs that were found (all of them)
                     printJobs(JobData.findAll());
                 } else {
 
@@ -46,7 +50,7 @@ public class TechJobs {
 
                     System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
 
-                    // Print list of skills, employers, etc
+                    // prints all values from a category (all skill values, all locations, etc.)
                     for (String item : results) {
                         System.out.println(item);
                     }
@@ -70,14 +74,14 @@ public class TechJobs {
         }
     }
 
-    // ﻿Returns the key of the selected item from the choices Dictionary
+    // Returns the key of the selected item from the choices Dictionary
     private static String getUserSelection(String menuHeader, HashMap<String, String> choices) {
 
         int choiceIdx = -1;
         Boolean validChoice = false;
         String[] choiceKeys = new String[choices.size()];
 
-        // Put the choices in an ordered structure so we can
+        // Put the choices in an ordered structure, so we can
         // associate an integer with each one
         int i = 0;
         for (String choiceKey : choices.keySet()) {
@@ -117,9 +121,29 @@ public class TechJobs {
         return choiceKeys[choiceIdx];
     }
 
-    // Print a list of jobs
-    private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+    // Prints list of jobs that we want to show to the user
+    private static int printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
-        System.out.println("printJobs is not implemented yet");
+        if (someJobs.isEmpty()){
+            System.out.println(
+            "No Results" );
+
+        } else {
+
+//            [[ran out of time to work on bonus missions :( could set list alphabetically here since we already have the list of hashmaps (someJobs)
+//            was not sure how this would work if we need to organize by a certian chosen column or just showing all.
+//
+
+            for (HashMap<String, String> currentMap : someJobs) {
+            System.out.println("*****");
+
+//          [[looks at and checks one map at a time]]
+            for (String key : currentMap.keySet()) {
+                String value = currentMap.get(key);
+                System.out.println(key + ": " + value);
+            }
+            System.out.println("*****\n");
+        }}
+        return 0;
     }
 }
